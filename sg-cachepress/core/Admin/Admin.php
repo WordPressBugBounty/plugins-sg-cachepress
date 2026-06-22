@@ -46,6 +46,10 @@ class Admin {
 		'admin-icons-font', // Yoga-fit Тheme
 	);
 
+	public $dequeued_scripts = array(
+		'wc-admin-wcsettings-deprecation', // Woocommerce JS error introducing file.
+	);
+
 	/**
 	 * Get the subpages id.
 	 *
@@ -153,6 +157,11 @@ class Admin {
 		// Bail if we are on different page.
 		if ( false === $this->is_plugin_page() ) {
 			return;
+		}
+
+		// Dequeue conflicting scripts.
+		foreach ( $this->dequeued_scripts as $script ) {
+			wp_dequeue_script( $script );
 		}
 
 		wp_enqueue_media();

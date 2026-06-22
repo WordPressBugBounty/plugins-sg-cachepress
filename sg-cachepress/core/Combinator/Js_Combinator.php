@@ -533,6 +533,13 @@ class Js_Combinator extends Abstract_Combinator {
 	);
 
 	/**
+	 * Array containing excluded internal paths.
+	 *
+	 * @var array Array containing the internal paths that should be excluded.
+	 */
+	private $excluded_internal_paths = array();
+
+	/**
 	 * The singleton instance.
 	 *
 	 * @since 5.5.2
@@ -889,6 +896,15 @@ class Js_Combinator extends Abstract_Combinator {
 
 			if ( in_array( str_replace( trailingslashit( Helper_Service::get_site_url() ), '', $src ), $this->excluded_urls ) ) {
 				return true;
+			}
+
+			// Also check and exclude internal paths.
+			$excluded_internal_paths = apply_filters( 'sgo_javascript_combine_excluded_internal_paths', $this->excluded_internal_paths );
+
+			foreach ( $excluded_internal_paths as $path ) {
+				if ( false !== @strpos( $src, $path ) ) {
+					return true;
+				}
 			}
 
 			return false;

@@ -20,6 +20,10 @@ class Front_End_Optimization {
 	 */
 	public $assets_dir = null;
 
+	/**
+	 * A placeholder for the URL, on which the assets can be accessed.
+	 */
+	public $assets_url = null;
 
 	/**
 	 * Limit of assets dir in bytes.
@@ -87,6 +91,8 @@ class Front_End_Optimization {
 	public function __construct() {
 		// Set the assets dir path.
 		$this->set_assets_directory_path();
+		// Sets the assets URL.
+		$this->set_assets_directory_url();
 
 		self::$instance = $this;
 		$this->blacklisted_async_scripts = array_merge(
@@ -543,4 +549,24 @@ class Front_End_Optimization {
 		return $size;
 	}
 
+	/**
+	 * Builds the URL that loads the assets.
+	 *
+	 * @return void
+	 */
+	public function set_assets_directory_url() {
+		// Bail if the assets URL has been set.
+		if ( null !== $this->assets_url ) {
+			return;
+		}
+
+		// Get the base assets URL.
+		$baseurl = Helper_Service::get_assets_url();
+
+		// Assign the assets URL only if the assets directory exists.
+		if ( is_dir( $this->assets_dir ) ) {
+			// Build the SGO assets URL.
+			$this->assets_url = $baseurl . '/siteground-optimizer-assets/';
+		}
+	}
 }

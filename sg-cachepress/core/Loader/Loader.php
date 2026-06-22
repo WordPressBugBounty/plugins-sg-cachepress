@@ -307,7 +307,7 @@ class Loader {
 		// Register the stylesheets for the admin area.
 		add_action( 'admin_enqueue_scripts', array( $this->admin, 'enqueue_styles' ), 111 );
 		// Register the JavaScript for the admin area.
-		add_action( 'admin_enqueue_scripts', array( $this->admin, 'enqueue_scripts' ) );
+		add_action( 'admin_enqueue_scripts', array( $this->admin, 'enqueue_scripts' ), 111 );
 		// Add styles to WordPress admin head.
 		add_action( 'admin_print_styles', array( $this->admin, 'admin_print_styles' ) );
 		// Hide all errors and notices on our custom dashboard.
@@ -651,7 +651,7 @@ class Loader {
 	 * @throws \Exception Exception If the type is not supported.
 	 */
 	public function add_supercacher_hooks() {
-		add_action( 'siteground_optimizer_purge_cron_cache', array( $this->supercacher, 'purge_cache' ), 11 );
+		add_action( 'siteground_optimizer_purge_cron_cache', array( $this->supercacher, 'process_purge_queue' ), 11 );
 
 		// Bail if Dynamic cache or Autoflush is disabled.
 		if (

@@ -1098,7 +1098,7 @@ class File_Cacher extends Supercacher {
 	 * @since  7.0.1
 	 */
 	public function maybe_enable_dynamic() {
-		// Bail fi the dynamic cache is enabled.
+		// Bail if the dynamic cache is enabled.
 		if ( Options::is_enabled( 'siteground_optimizer_enable_cache' ) ) {
 			return;
 		}
